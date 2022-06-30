@@ -73,6 +73,13 @@ public class SampleActivity extends Activity {
         super.onDestroy();
     }
 
+    public String getSendButtonText() {
+        return sendButton.getText().toString();
+    }
+    public String getNetworkType() {
+        return networkTypeButton.getText().toString();
+    }
+
     static class ButtonState {
         final int textId;
         final boolean isEnabled;
