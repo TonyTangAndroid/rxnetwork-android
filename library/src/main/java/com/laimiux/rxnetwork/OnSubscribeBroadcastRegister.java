@@ -9,12 +9,11 @@ import android.os.Handler;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 
 
 class OnSubscribeBroadcastRegister implements ObservableOnSubscribe<Intent> {
 
-    private final Context context;
+    public final Context context;
     private final IntentFilter intentFilter;
     private final String broadcastPermission;
     private final Handler schedulerHandler;
@@ -29,27 +28,10 @@ class OnSubscribeBroadcastRegister implements ObservableOnSubscribe<Intent> {
 
     @Override
     public void subscribe(final @NonNull ObservableEmitter<Intent> observableEmitter) {
-        final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                observableEmitter.onNext(intent);
-            }
-        };
-        observableEmitter.setDisposable(new Disposable() {
-            boolean disposed;
-
-            @Override
-            public void dispose() {
-                this.disposed = true;
-                context.unregisterReceiver(broadcastReceiver);
-            }
-
-            @Override
-            public boolean isDisposed() {
-                return disposed;
-            }
-        });
+        final BroadcastReceiver broadcastReceiver = new MyBroadcastReceiver(observableEmitter);
+        observableEmitter.setDisposable(new MyDisposable(this, broadcastReceiver));
 
         context.registerReceiver(broadcastReceiver, intentFilter, broadcastPermission, schedulerHandler);
     }
+
 }
