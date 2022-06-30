@@ -32,7 +32,7 @@ public class RxNetworkActiveNetworkInfoTest {
         shadowConnectivityManager.setActiveNetworkInfo(instructedNetworkInfo);
 
         //then
-        NetworkInfo receivedNetworkInfo = RxNetwork.activeNetworkInfo(application);
+        NetworkInfo receivedNetworkInfo = RxNetworkMapper.extractActiveNetworkInfo(application);
         assertThat(receivedNetworkInfo).isNotNull();
         assertThat(receivedNetworkInfo.getType()).isEqualTo(ConnectivityManager.TYPE_WIFI);
         assertThat(receivedNetworkInfo.getDetailedState()).isEqualTo(NetworkInfo.DetailedState.CONNECTED);

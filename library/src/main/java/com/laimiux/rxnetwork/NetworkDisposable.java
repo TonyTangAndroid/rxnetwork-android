@@ -1,23 +1,24 @@
 package com.laimiux.rxnetwork;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 
 import io.reactivex.disposables.Disposable;
 
-class MyDisposable implements Disposable {
-    private final OnSubscribeBroadcastRegister onSubscribeBroadcastRegister;
+class NetworkDisposable implements Disposable {
+    private final Context context;
     private final BroadcastReceiver broadcastReceiver;
     private boolean disposed;
 
-    public MyDisposable(OnSubscribeBroadcastRegister onSubscribeBroadcastRegister, BroadcastReceiver broadcastReceiver) {
-        this.onSubscribeBroadcastRegister = onSubscribeBroadcastRegister;
+    public NetworkDisposable(Context context, BroadcastReceiver broadcastReceiver) {
+        this.context = context;
         this.broadcastReceiver = broadcastReceiver;
     }
 
     @Override
     public void dispose() {
         this.disposed = true;
-        onSubscribeBroadcastRegister.context.unregisterReceiver(broadcastReceiver);
+        this.context.unregisterReceiver(broadcastReceiver);
     }
 
     @Override

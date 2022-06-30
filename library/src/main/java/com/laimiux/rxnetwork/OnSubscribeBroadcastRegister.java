@@ -8,7 +8,6 @@ import android.os.Handler;
 
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.annotations.NonNull;
 
 
 class OnSubscribeBroadcastRegister implements ObservableOnSubscribe<Intent> {
@@ -21,16 +20,14 @@ class OnSubscribeBroadcastRegister implements ObservableOnSubscribe<Intent> {
     OnSubscribeBroadcastRegister(Context context, IntentFilter intentFilter, String broadcastPermission, Handler schedulerHandler) {
         this.context = context;
         this.intentFilter = intentFilter;
-        this.broadcastPermission = broadcastPermission;
         this.schedulerHandler = schedulerHandler;
+        this.broadcastPermission = broadcastPermission;
     }
 
-
     @Override
-    public void subscribe(final @NonNull ObservableEmitter<Intent> observableEmitter) {
-        final BroadcastReceiver broadcastReceiver = new MyBroadcastReceiver(observableEmitter);
-        observableEmitter.setDisposable(new MyDisposable(this, broadcastReceiver));
-
+    public void subscribe(ObservableEmitter<Intent> observableEmitter) {
+        final BroadcastReceiver broadcastReceiver = new NetworkBroadcastReceiver(observableEmitter);
+        observableEmitter.setDisposable(new NetworkDisposable(context, broadcastReceiver));
         context.registerReceiver(broadcastReceiver, intentFilter, broadcastPermission, schedulerHandler);
     }
 
