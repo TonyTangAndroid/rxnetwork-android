@@ -1,4 +1,4 @@
-package mix
+package com.laimiux.worker
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth
