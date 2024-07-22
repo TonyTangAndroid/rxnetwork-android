@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="network_absent">无法连接网络，请检查网络设置</string>
+  <string name="unknown_error">未知错误</string>
+</resources>
