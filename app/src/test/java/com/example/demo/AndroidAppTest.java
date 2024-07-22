@@ -14,6 +14,6 @@ public class AndroidAppTest {
     @Test
     public void useAppContext() {
         assertThat(InstrumentationRegistry.getInstrumentation().getTargetContext().getPackageName()).isEqualTo("com.laimiux.samples");
-        assertThat(ApplicationProvider.getApplicationContext().getPackageName()).isEqualTo("com.laimiux.sample");
+        assertThat(ApplicationProvider.getApplicationContext().getPackageName()).isEqualTo("com.laimiux.samples");
     }
 }
